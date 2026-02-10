@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Galentine 💖</title>
+
+<style>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #ffe0ec, #fff0f5);
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+#card {
+    background: white;
+    padding: 2rem;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    max-width: 360px;
+}
+
+h1 {
+    color: #d63384;
+}
+
+img {
+    width: 240px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    position: relative;
+    height: 60px;
+}
+
+button {
+    padding: 12px 26px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+#yes {
+    background: #ff4d6d;
+    color: white;
+}
+
+#no {
+    background: #adb5bd;
+    color: white;
+    position: absolute;
+    left: 55%;
+}
+</style>
+</head>
+
+<body>
+
+<div id="card">
+    <img id="gif" src="https://media.giphy.com/media/qUIm5wu6Lcy4/giphy.gif">
+    <h1 id="text">Will you be my Galentine? 💕</h1>
+
+    <div class="buttons">
+        <button id="yes" onclick="yesClick()">Yes 💖</button>
+        <button id="no" onmouseover="moveNo()" ontouchstart="moveNo()">No 🙃</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+const noBtn = document.getElementById("no");
+const text = document.getElementById("text");
+const gif = document.getElementById("gif");
+
+function moveNo() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+function yesClick() {
+    text.innerHTML = "YAY 🥂💖 Best Galentine Ever!";
+    gif.src = "https://media.giphy.com/media/l41lTfX8n6V6QvY2U/giphy.gif";
+    noBtn.style.display = "none";
+
+    confetti({
+        particleCount: 200,
+        spread: 90,
+        colors: ['#ff4d6d','#ff758f','#ffc2d1']
+    });
+}
+</script>
+
+</body>
+</html>
