@@ -35,19 +35,25 @@ h1 {
   margin-bottom: 15px;
 }
 
-/* SVG animation box */
-.animation {
-  width: 220px;
-  height: 160px;
-  margin: 0 auto 15px;
+/* Simple animated heart (stable, no GIFs) */
+.heart {
+  font-size: 48px;
+  animation: pulse 0.9s infinite alternate;
+  margin-bottom: 10px;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.25); }
 }
 
 /* Buttons */
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 18px;
-  margin-top: 10px;
+  gap: 20px;
+  margin-top: 15px;
+  position: relative;
 }
 
 button {
@@ -56,6 +62,7 @@ button {
   border: none;
   border-radius: 50px;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 #yes {
@@ -73,23 +80,9 @@ button {
 <body>
 
 <div class="card">
-  <div id="animation" class="animation">
-    <!-- Cute animated hearts (GIF replacement) -->
-    <svg viewBox="0 0 200 140" width="220">
-      <text x="50%" y="50%" text-anchor="middle" fill="#ff4d6d" font-size="40">
-        💖
-        <animateTransform
-          attributeName="transform"
-          type="scale"
-          from="1"
-          to="1.3"
-          dur="0.8s"
-          repeatCount="indefinite" />
-      </text>
-    </svg>
-  </div>
+  <div class="heart" id="heart">💖</div>
 
-  <h1 id="text">Will you be my Galentine? 💕</h1>
+  <h1 id="text">Triveni, will you be my Galentine? 💕</h1>
 
   <div class="buttons">
     <button id="yes">Yes 💖</button>
@@ -103,33 +96,25 @@ button {
 const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
 const text = document.getElementById("text");
-const animation = document.getElementById("animation");
+const heart = document.getElementById("heart");
 
+/* Proper teasing logic (moves away, never overlaps Yes) */
 noBtn.addEventListener("mouseenter", () => {
-  noBtn.style.transform = "translateX(30px)";
+  const moveX = Math.random() > 0.5 ? 60 : -60;
+  const moveY = Math.random() > 0.5 ? 25 : -25;
+
+  noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+
   setTimeout(() => {
-    noBtn.style.transform = "translateX(-30px)";
-  }, 150);
+    noBtn.style.transform = "translate(0,0)";
+  }, 250);
 });
 
+/* Yes button celebration */
 yesBtn.addEventListener("click", () => {
-  text.innerText = "YAY 💖 Best Galentine Ever!";
+  text.innerText = "YAY 💖 Best Galentine Ever, Triveni!";
   noBtn.style.display = "none";
-
-  animation.innerHTML = `
-    <svg viewBox="0 0 200 140" width="220">
-      <text x="50%" y="55%" text-anchor="middle" fill="#ff4d6d" font-size="36">
-        🎉💖🎉
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          from="0 100 70"
-          to="360 100 70"
-          dur="1.2s"
-          repeatCount="indefinite" />
-      </text>
-    </svg>
-  `;
+  heart.innerText = "🎉💖🎉";
 
   confetti({
     particleCount: 180,
